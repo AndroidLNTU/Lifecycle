@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(
                         navController,
-                        startDestination = "Greeting",
+                        startDestination = Greeting,
                         Modifier.padding(innerPadding)
                     ) {
                         composable<Greeting> {
@@ -102,7 +102,8 @@ object Home
 @Composable
 fun Greeting(
     name: String, modifier: Modifier = Modifier,
-    viewModel: GreetingViewModel = viewModel(), navigateToHome: () -> Unit
+    viewModel: GreetingViewModel = viewModel(),
+    navigateToHome: () -> Unit
 ) {
     Column(modifier = modifier) {
         Text(
