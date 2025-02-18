@@ -139,13 +139,13 @@ fun Home(
     var titleRemember by remember { mutableStateOf("titleRemember init value") }
     var notTitle = "notTitle init value"
 
-    "Home recompose title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
+//    "Home recompose title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
 
     LaunchedEffect(counter) {
         title = counter.toString()
         notTitle = counter.toString()
         titleRemember = counter.toString()
-        "LaunchedEffect(counter) title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
+//        "LaunchedEffect(counter) title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
     }
 
     Column(modifier = modifier) {
@@ -193,7 +193,7 @@ class GreetingViewModel : ViewModel() {
 class HomeViewModel : ViewModel() {
     init {
         "HomeViewModel init".logD()
-        initCounter()
+//        initCounter()
     }
 
     private val _counter = MutableStateFlow(0)
