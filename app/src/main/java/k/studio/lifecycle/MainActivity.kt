@@ -13,14 +13,24 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import k.studio.lifecycle.ui.theme.LifecycleTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
@@ -121,10 +131,24 @@ fun Home(
     viewModel: HomeViewModel = viewModel(),
     back: () -> Unit
 ) {
+    "Home recompose".logD()
+    val counter by viewModel.counter.collectAsState()
+    var title by CustomRememberText { mutableStateOf("Init value") }
+
+    LaunchedEffect(counter) {
+        "LaunchedEffect(counter)".logD()
+        title = "$counter"
+    }
+
     Column(modifier = modifier) {
         Text(
             text = "Home Screen"
         )
+
+        Text(
+            text = "Title: $title"
+        )
+
         Button(onClick = back) {
             Text(text = "Back")
         }
@@ -161,6 +185,21 @@ class GreetingViewModel : ViewModel() {
 class HomeViewModel : ViewModel() {
     init {
         "HomeViewModel init".logD()
+        initCounter()
+    }
+
+    private val _counter = MutableStateFlow(0)
+    val counter: StateFlow<Int> = _counter
+
+    private fun initCounter() {
+        viewModelScope.launch(Dispatchers.IO) {
+            while (true) {
+                delay(1000)
+                val newValue = counter.value + 1
+                "counter $newValue".logD()
+                _counter.emit(newValue)
+            }
+        }
     }
 
     override fun onCleared() {
