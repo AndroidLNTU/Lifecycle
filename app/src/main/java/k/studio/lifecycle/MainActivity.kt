@@ -134,22 +134,19 @@ fun Home(
     back: () -> Unit
 ) {
 
-//    val counter by viewModel.counter.collectAsState()
-//    var title by CustomRememberText { mutableStateOf("title init value") }
+    val counter by viewModel.counter.collectAsState()
+    var title by CustomRememberText { mutableStateOf("title init value") }
     var titleRemember by remember { mutableStateOf("titleRemember init value") }
-//    var notTitle = "notTitle init value"
+    var notTitle = "notTitle init value"
 
-//    "Home recompose title:$title, notTitle:$notTitle".logD()
-//    "Home recompose titleRemember:$titleRemember".logD()
-    "Home recompose".logD()
+    "Home recompose title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
 
-//    LaunchedEffect(counter) {
-//        title = counter.toString()
-//        notTitle = counter.toString()
-//        titleRemember = counter.toString()
-//        "LaunchedEffect(counter) title:$title, notTitle:$notTitle".logD()
-//        "LaunchedEffect(counter) titleRemember:$titleRemember".logD()
-//    }
+    LaunchedEffect(counter) {
+        title = counter.toString()
+        notTitle = counter.toString()
+        titleRemember = counter.toString()
+        "LaunchedEffect(counter) title:$title, notTitle:$notTitle, titleRemember:$titleRemember".logD()
+    }
 
     Column(modifier = modifier) {
         Text(
