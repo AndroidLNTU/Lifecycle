@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
 }
 
 fun String.logD() {
-    Log.d("MainActivity", this)
+    Log.d("Example", this)
 }
 
 @Serializable  object Greeting
