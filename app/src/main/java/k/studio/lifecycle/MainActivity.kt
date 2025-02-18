@@ -17,6 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
@@ -131,14 +133,23 @@ fun Home(
     viewModel: HomeViewModel = viewModel(),
     back: () -> Unit
 ) {
-    "Home recompose".logD()
-    val counter by viewModel.counter.collectAsState()
-    var title by CustomRememberText { mutableStateOf("Init value") }
 
-    LaunchedEffect(counter) {
-        "LaunchedEffect(counter)".logD()
-        title = "$counter"
-    }
+//    val counter by viewModel.counter.collectAsState()
+//    var title by CustomRememberText { mutableStateOf("title init value") }
+    var titleRemember by remember { mutableStateOf("titleRemember init value") }
+//    var notTitle = "notTitle init value"
+
+//    "Home recompose title:$title, notTitle:$notTitle".logD()
+//    "Home recompose titleRemember:$titleRemember".logD()
+    "Home recompose".logD()
+
+//    LaunchedEffect(counter) {
+//        title = counter.toString()
+//        notTitle = counter.toString()
+//        titleRemember = counter.toString()
+//        "LaunchedEffect(counter) title:$title, notTitle:$notTitle".logD()
+//        "LaunchedEffect(counter) titleRemember:$titleRemember".logD()
+//    }
 
     Column(modifier = modifier) {
         Text(
@@ -146,7 +157,7 @@ fun Home(
         )
 
         Text(
-            text = "Title: $title"
+            text = "Title: $titleRemember"
         )
 
         Button(onClick = back) {
@@ -193,7 +204,7 @@ class HomeViewModel : ViewModel() {
 
     private fun initCounter() {
         viewModelScope.launch(Dispatchers.IO) {
-            while (true) {
+            repeat(3) {
                 delay(1000)
                 val newValue = counter.value + 1
                 "counter $newValue".logD()

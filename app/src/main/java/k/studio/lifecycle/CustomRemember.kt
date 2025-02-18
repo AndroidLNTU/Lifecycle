@@ -13,11 +13,11 @@ class CustomRememberText(val getInitValue: () -> State<String>) {
         if (state.value == null) {
             state.value = getInitValue().value
         }
-        return state.value!!.apply { "getValue $this".logD() }
+        return state.value!!//.apply { "CustomRememberText getValue $this".logD() }
     }
 
     operator fun setValue(nothing: Nothing?, property: KProperty<*>, newValue: Any) {
-        "setValue ${property.name} $newValue".logD()
+        //"CustomRememberText setValue ${property.name} $newValue".logD()
         state.value = newValue as String
     }
 }
