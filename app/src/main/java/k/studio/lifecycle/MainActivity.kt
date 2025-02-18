@@ -93,9 +93,11 @@ fun String.logD() {
     Log.d("Example", this)
 }
 
-@Serializable  object Greeting
+@Serializable
+object Greeting
 
-@Serializable object Home
+@Serializable
+object Home
 
 @Composable
 fun Greeting(
@@ -133,6 +135,14 @@ fun Home(
 fun GreetingPreview() {
     LifecycleTheme {
         Greeting("Android", navigateToHome = {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomePreview() {
+    LifecycleTheme {
+        Home(back = {})
     }
 }
 
